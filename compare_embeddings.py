@@ -5,7 +5,9 @@ import openai
 import os
 
 # Load environment variables. Assumes that project contains .env file with API keys
-load_dotenv()
+load_dotenv('config.env')
+openai.api_key = os.environ['OPENAI_API_KEY']
+
 #---- Set OpenAI API key
 # Change environment variable name from "OPENAI_API_KEY" to the name given in
 # your .env file.
