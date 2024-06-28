@@ -19,7 +19,9 @@ print(os.environ.get('OPENAI_API_KEY'))
 openai.api_key = os.environ['OPENAI_API_KEY']
 
 CHROMA_PATH = "chroma"
+CHROMA1_PATH = "chroma_1"
 DATA_PATH = "data/books"
+FILE_PATH = "data/files"
 
 
 def main():
@@ -33,7 +35,8 @@ def generate_data_store():
 
 
 def load_documents():
-    loader = DirectoryLoader(DATA_PATH, glob="*.md")
+    #loader = DirectoryLoader(DATA_PATH, glob="*.md")
+    loader = DirectoryLoader(FILE_PATH, glob="*.pdf")
     documents = loader.load()
     return documents
 
@@ -57,15 +60,15 @@ def split_text(documents: list[Document]):
 
 def save_to_chroma(chunks: list[Document]):
     # Clear out the database first.
-    if os.path.exists(CHROMA_PATH):
-        shutil.rmtree(CHROMA_PATH)
+    if os.path.exists(CHROMA1_PATH):
+        shutil.rmtree(CHROMA1_PATH)
 
     # Create a new DB from the documents.
     db = Chroma.from_documents(
-        chunks, OpenAIEmbeddings(), persist_directory=CHROMA_PATH
+        chunks, OpenAIEmbeddings(), persist_directory=CHROMA1_PATH
     )
     db.persist()
-    print(f"Saved {len(chunks)} chunks to {CHROMA_PATH}.")
+    print(f"Saved {len(chunks)} chunks to {CHROMA1_PATH}.")
 
 
 if __name__ == "__main__":

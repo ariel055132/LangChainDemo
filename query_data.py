@@ -11,7 +11,7 @@ import openai
 load_dotenv('config.env')
 openai.api_key = os.environ['OPENAI_API_KEY']
 
-CHROMA_PATH = "chroma"
+CHROMA_PATH = "chroma_1"
 
 PROMPT_TEMPLATE = """
 Answer the question based only on the following context:

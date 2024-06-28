@@ -12,7 +12,7 @@ def fetch_embeddings():
 
 # Load data from vector database.
 
-CHROMA_PATH = "chroma"
+CHROMA_PATH = "chroma_1"
 
 load_dotenv('config.env')
 print(os.environ.get('OPENAI_API_KEY'))
