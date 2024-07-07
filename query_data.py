@@ -7,11 +7,12 @@ from langchain.prompts import ChatPromptTemplate
 from dotenv import load_dotenv
 import os
 import openai
+import constants
 
 load_dotenv('config.env')
 openai.api_key = os.environ['OPENAI_API_KEY']
 
-CHROMA_PATH = "chroma_1"
+CHROMA_PATH = constants.CHROMA_BIAN_PATH
 
 PROMPT_TEMPLATE = """
 Answer the question based only on the following context:
