@@ -16,3 +16,4 @@ tiktoken==0.7.0
 # onnxruntime==1.17.1
 # For Windows users, install Microsoft Visual C++ Build Tools first
 # install onnxruntime before installing `chromadb`
+pandas~=2.2.2

@@ -1,10 +1,11 @@
 import argparse
 import pandas as pd
+import os
 
 
-def load_excel_and_print_columns(filepath, sheet_name):
+def load_excel_and_print_columns(filepath: str, sheet_name: str):
     """
-    Load an Excel file and print its columns.
+    Load an Excel file, print its columns, and close the file.
 
     Args:
     filepath (str): Path to the Excel file.
@@ -13,35 +14,44 @@ def load_excel_and_print_columns(filepath, sheet_name):
     Returns:
     pd.DataFrame: Loaded data as pandas DataFrame.
     """
+
+    # File Exist checking
+    if not os.path.exists(filepath):
+        print("Error: File does not exist")
+        return None
     try:
-        df = pd.read_excel(filepath, sheet_name=sheet_name)
-        print("Columns in the DataFrame:")
-        print(df.columns)
-        return df
+        # Sheet name checking
+        with pd.ExcelFile(filepath) as xls:
+            if sheet_name not in xls.sheet_names:
+                print("Error: Sheet Name is not valid / exist.")
+                return None
+            dataFrame = pd.read_excel(xls, sheet_name=sheet_name)
+            print("Columns in the DataFrame:")
+            print(dataFrame.columns)
+            return dataFrame
     except Exception as e:
         print(f"Error: {e}")
         return None
 
 
-def save_selected_columns_to_csv(df, columns, output_filepath):
+def save_selected_columns_to_csv(df: pd.DataFrame, columns: list[str], output_filepath: str) -> None:
     """
        Save selected columns of a DataFrame to a CSV file.
 
        Args:
        df (pd.DataFrame): DataFrame to select columns from.
-       columns (list): List of column names to select.
+       columns (list[str]): List of column names to select.
        output_filepath (str): File path to save the CSV file.
     """
     if df is None:
         print("DataFrame is empty. Cannot proceed with saving to CSV.")
         return
     try:
-        # Select the desired columns
+        # Check if the specified columns exist in the DataFrame before attempting to select them
+        if not set(columns).issubset(df.columns):
+            print("Specified columns do not exist in the DataFrame.")
+            return
         selected_columns = df[columns]
-
-        # Print the selected columns (optional, can be commented out in production)
-        print("Selected columns:")
-        print(selected_columns)
 
         # Save to CSV
         selected_columns.to_csv(output_filepath, encoding='utf8', index=False, header=columns)
