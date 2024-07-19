@@ -9,6 +9,8 @@ import os
 import openai
 import constants
 
+# Create database with BIAN v12 asset(SD).CSV
+
 load_dotenv('config.env')
 openai.api_key = os.environ['OPENAI_API_KEY']
 
